@@ -1,21 +1,34 @@
+import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, Segment } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
-import styled from 'styled-components'
+const Header = () => {
+  const [activeItem, setActiveItem] = useState('home')
 
-const HeaderLink = styled.a`
-  margin-right: 15;
-`
-
-const Header = () => (
-  <div>
-    <Link href="/">
-      <HeaderLink>Home</HeaderLink>
-    </Link>
-    <Link href="/projects">
-      <HeaderLink>Projects</HeaderLink>
-    </Link>
-  </div>
-)
+  return (
+    <div>
+      <Menu pointing secondary>
+        <Link href="/" passHref>
+          <Menu.Item
+            as="a"
+            active={activeItem === 'home'}
+            onClick={() => setActiveItem('home')}
+          >
+            Home
+          </Menu.Item>
+        </Link>
+        <Link href="/projects" passHref>
+          <Menu.Item
+            as="a"
+            active={activeItem === 'projects'}
+            onClick={() => setActiveItem('projects')}
+          >
+            Projects
+          </Menu.Item>
+        </Link>
+      </Menu>
+    </div>
+  )
+}
 
 export default Header
