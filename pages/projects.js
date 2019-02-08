@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 
+import Layout from '../components/Layout'
+
 const initialProjects = [
   { id: 1, name: 'Project A' },
   { id: 2, name: 'Project B' },
@@ -9,7 +11,7 @@ const initialProjects = [
 const Projects = () => {
   const [projects, setProjects] = useState(initialProjects)
   return (
-    <div>
+    <Layout>
       <p>This is Project Page</p>
       <ul>
         {projects.map(project => (
@@ -21,14 +23,13 @@ const Projects = () => {
                 query: { id: project.id },
               }}
               as={`/projects/${project.id}`}
-              replace
             >
               <a>{project.name}</a>
             </Link>
           </li>
         ))}
       </ul>
-    </div>
+    </Layout>
   )
 }
 

@@ -1,5 +1,11 @@
 import { withRouter } from 'next/router'
 
-const Project = withRouter(({ router: { query } }) => <p>{query.id}</p>)
+import Layout from '../../components/Layout'
+
+const Project = withRouter(({ router: { query } }) => (
+  <Layout>
+    <p>{query.id}</p>
+  </Layout>
+))
 
 export default Project
