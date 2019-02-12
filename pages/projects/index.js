@@ -22,7 +22,11 @@ class Projects extends Component {
           <div key={project.id}>
             <p>id: {project.id}</p>
             <Link
-              href={{pathname: `/projects/${project.id}`}}
+              href={{
+                pathname: "/projects/project",
+                query: { id: project.id }
+              }}
+              as={`/projects/${project.id}`}
             >
               <a>{project.title}</a>
             </Link>

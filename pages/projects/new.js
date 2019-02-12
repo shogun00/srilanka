@@ -1,5 +1,4 @@
 import React, { useState, Component } from 'react'
-import Link from 'next/link'
 import { withRouter } from 'next/router'
 import { List, Button } from 'semantic-ui-react'
 import axios from 'axios';
