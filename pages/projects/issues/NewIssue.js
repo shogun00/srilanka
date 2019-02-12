@@ -1,20 +1,13 @@
 import { useState } from 'react'
 import axios from 'axios'
-import {
-  Form,
-  Input,
-  TextArea,
-  Card,
-  Button,
-  StepTitle,
-} from 'semantic-ui-react'
+import { Form, Input, TextArea, Card, Button } from 'semantic-ui-react'
 import Layout from '../../../components/Layout'
 
 const ENDPOINT = 'http://tyari.info:9999/v1'
 
-const projectId = 1
+// const projectId = 1
 
-const handleSubmit = (title, description) => {
+const handleSubmit = (projectId, title, description) => {
   const requestBody = {
     issue: {
       title,
@@ -30,7 +23,9 @@ const handleSubmit = (title, description) => {
   console.log(res)
 }
 
-const NewIssue = () => {
+const NewIssue = ({ url: { query } }) => {
+  console.log(query)
+  const projectId = query.id
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
@@ -43,7 +38,7 @@ const NewIssue = () => {
           </Card.Header>
         </Card.Content>
         <Card.Content>
-          <Form onSubmit={() => handleSubmit(title, description)}>
+          <Form onSubmit={() => handleSubmit(projectId, title, description)}>
             <Input
               placeholder="title"
               value={title}
