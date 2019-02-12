@@ -1,10 +1,11 @@
 import 'semantic-ui-css/semantic.min.css'
+import { Container } from 'semantic-ui-react'
 import Header from './Header'
 
 const Layout = props => (
   <>
     <Header />
-    {props.children}
+    <Container style={{ marginTop: 20 }}>{props.children}</Container>
   </>
 )
 

@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
 import { withRouter, router } from 'next/router'
 import { List, Button } from 'semantic-ui-react'
-import axios from 'axios';
+import axios from 'axios'
 
 import Layout from '../../components/Layout'
+import IssuesList from './IssuesList'
 
 const ENDPOINT = 'http://tyari.info:9999/v1'
 
 class Project extends Component {
   static async getInitialProps({ query }) {
     const res = await axios.get(`${ENDPOINT}/projects/${query.id}`)
-    return { project: res.data }
+    const resIssues = await axios.get(`${ENDPOINT}/projects/${query.id}/issues`)
+    return { project: res.data, issues: resIssues.data }
   }
 
   projectInfo = () => {
-    return (
-      <List items={this.items()} />
-    )
+    return <List items={this.items()} />
   }
 
   items = () => {
@@ -24,14 +24,14 @@ class Project extends Component {
       this.projectIdTag(),
       this.projectTitleTag(),
       this.projectStatusTag(),
-      this.buttonArea()
+      // this.buttonArea(),
     ]
   }
 
   projectIdTag = () => {
     const { project } = this.props
     return (
-      <div key="id" style={{display: "flex"}}>
+      <div key="id" style={{ display: 'flex' }}>
         <p>id: </p>
         <p>{project.id}</p>
       </div>
@@ -41,7 +41,7 @@ class Project extends Component {
   projectTitleTag = () => {
     const { project } = this.props
     return (
-      <div key="title" style={{display: "flex"}}>
+      <div key="title" style={{ display: 'flex' }}>
         <p>title: </p>
         <p>{project.title}</p>
       </div>
@@ -51,7 +51,7 @@ class Project extends Component {
   projectStatusTag = () => {
     const { project } = this.props
     return (
-      <div key="status" style={{display: "flex"}}>
+      <div key="status" style={{ display: 'flex' }}>
         <p>status: </p>
         <p>{project.status}</p>
       </div>
@@ -59,26 +59,24 @@ class Project extends Component {
   }
 
   buttonArea = () => {
-    return (
-      <div key="buttons">
-        {this.returnTag()}
-      </div>
-    )
+    return <div key="buttons">{this.returnTag()}</div>
   }
 
   returnTag = () => {
     return (
-      <Button href='/projects'>
+      <Button href="/projects">
         <p>戻る</p>
       </Button>
     )
   }
 
   render = () => {
-    const { project } = this.props
-    return(
+    const { project, issues } = this.props
+    return (
       <Layout>
         {this.projectInfo()}
+        <IssuesList project={project} issues={issues} />
+        {this.buttonArea()}
       </Layout>
     )
   }
