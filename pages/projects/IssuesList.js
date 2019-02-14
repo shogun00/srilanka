@@ -1,14 +1,13 @@
-import { useState } from 'react'
 import Link from 'next/link'
 import { Card, List, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 
-const initialIssues = [
-  { id: 1, title: 'Issue 1', description: 'description 1' },
-  { id: 2, title: 'Issue 2', description: 'description 2' },
-  { id: 3, title: 'Issue 3', description: 'description 3' },
-  { id: 4, title: 'Issue 4', description: 'description 4' },
-]
+// const initialIssues = [
+//   { id: 1, title: 'Issue 1', description: 'description 1' },
+//   { id: 2, title: 'Issue 2', description: 'description 2' },
+//   { id: 3, title: 'Issue 3', description: 'description 3' },
+//   { id: 4, title: 'Issue 4', description: 'description 4' },
+// ]
 
 const CardHeadContainer = styled.div`
   display: flex;
@@ -58,8 +57,18 @@ const IssueItem = ({ issue }) => (
   <List.Item>
     <List.Icon color="teal" name="exclamation circle" />
     <List.Content>
-      <List.Header as="a">{issue.title}</List.Header>
-      <List.Description as="a">{issue.description}</List.Description>
+      <Link
+        href={{
+          pathname: '/projects/issues/Issue',
+          query: { project_id: issue.project_id, id: issue.id },
+        }}
+        as={`/projects/${issue.project_id}/issues/${issue.id}`}
+      >
+        <div>
+          <List.Header as="a">{issue.title}</List.Header>
+          <List.Description as="a">{issue.description}</List.Description>
+        </div>
+      </Link>
     </List.Content>
   </List.Item>
 )

@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import Router from 'next/router'
 import axios from 'axios'
 import { Form, Input, TextArea, Card, Button } from 'semantic-ui-react'
 import Layout from '../../../components/Layout'
+import { BACKEND_URL } from '../../../constants'
 
 const ENDPOINT = 'http://tyari.info:9999/v1'
 
@@ -17,14 +19,14 @@ const handleSubmit = (projectId, title, description) => {
   }
   // alert(title)
   const res = axios.post(
-    `${ENDPOINT}/projects/${projectId}/issues`,
+    `${BACKEND_URL}/projects/${projectId}/issues`,
     requestBody
   )
   console.log(res)
+  Router.push(`/projects/${projectId}`)
 }
 
 const NewIssue = ({ url: { query } }) => {
-  console.log(query)
   const projectId = query.id
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
