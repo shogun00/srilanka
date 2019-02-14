@@ -14,7 +14,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "express": "^4.16.4",
-    "next": "^7.0.2",
+    "next": "^8.0.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "semantic-ui-css": "^2.4.1",
