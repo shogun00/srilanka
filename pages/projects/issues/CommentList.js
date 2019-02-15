@@ -15,10 +15,10 @@ const CommentList = ({ comments }) => (
 const CommentDetail = ({ comment }) => {
   const [replyForm, setReplyForm] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  const onClickForOpen = useCallback(() => setReplyForm(true))
-  const onClickForClose = useCallback(() => setReplyForm(false))
-  const onClickforEditable = useCallback(() => setEditMode(true))
-  const onClickForUneditable = useCallback(() => setEditMode(false))
+  const onClickForOpen = useCallback(() => setReplyForm(true), [])
+  const onClickForClose = useCallback(() => setReplyForm(false), [])
+  const onClickforEditable = useCallback(() => setEditMode(true), [])
+  const onClickForUneditable = useCallback(() => setEditMode(false), [])
 
   return (
     <Comment>
@@ -52,29 +52,36 @@ const CommentDetail = ({ comment }) => {
   )
 }
 
-const EditForm = ({ content, onClick }) => (
-  <Form
-    reply
-    onSubmit={() => {
-      console.log('edit subbmit')
-      onClick()
-    }}
-  >
-    <Form.TextArea value={content} />
-    <FormButtonsContainer>
-      <Button
-        type="submit"
-        content="Update"
-        labelPosition="left"
-        icon="edit"
-        primary
+const EditForm = ({ content, onClick }) => {
+  const [editedContent, setEditedContent] = useState(content)
+
+  return (
+    <Form
+      reply
+      onSubmit={() => {
+        console.log('edit subbmit')
+        onClick()
+      }}
+    >
+      <Form.TextArea
+        onChange={e => setEditedContent(e.target.value)}
+        value={editedContent}
       />
-      <Button type="button" onClick={onClick}>
-        Cancel
-      </Button>
-    </FormButtonsContainer>
-  </Form>
-)
+      <FormButtonsContainer>
+        <Button
+          type="submit"
+          content="Update"
+          labelPosition="left"
+          icon="edit"
+          primary
+        />
+        <Button type="button" onClick={onClick}>
+          Cancel
+        </Button>
+      </FormButtonsContainer>
+    </Form>
+  )
+}
 
 const ReplyForm = ({ onClick }) => (
   <Form
@@ -111,7 +118,7 @@ const NewCommentForm = () => {
       }}
     >
       <Form.TextArea
-        onChange={e => setContent(() => e.target.value)}
+        onChange={e => setContent(e.target.value)}
         value={content}
       />
       <Button
