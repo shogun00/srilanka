@@ -2,15 +2,13 @@ import React, { useState, Component } from 'react'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import { Icon, List } from 'semantic-ui-react'
-import axios from 'axios';
+import client from '../../utils/client'
 
 import Layout from '../../components/Layout'
 
-const ENDPOINT = 'http://tyari.info:9999/v1'
-
 class Projects extends Component {
-  static async getInitialProps () {
-    const res = await axios.get(`${ENDPOINT}/projects/`)
+  static async getInitialProps() {
+    const res = await client.get('/projects/')
     return { projects: res.data }
   }
 
@@ -23,8 +21,8 @@ class Projects extends Component {
             <p>id: {project.id}</p>
             <Link
               href={{
-                pathname: "/projects/project",
-                query: { id: project.id }
+                pathname: '/projects/project',
+                query: { id: project.id },
               }}
               as={`/projects/${project.id}`}
             >
@@ -38,7 +36,13 @@ class Projects extends Component {
   createProjectLink = () => {
     const { router } = this.props
     return (
-      <Icon name='plus square outline' onClick={() => {router.push('/projects/new')} } key="createProject" />
+      <Icon
+        name="plus square outline"
+        onClick={() => {
+          router.push('/projects/new')
+        }}
+        key="createProject"
+      />
     )
   }
 

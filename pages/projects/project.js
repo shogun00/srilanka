@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import { withRouter, router } from 'next/router'
 import { List, Button } from 'semantic-ui-react'
-import axios from 'axios'
+import client from '../../utils/client'
 
 import Layout from '../../components/Layout'
 import IssuesList from './IssuesList'
 
-const ENDPOINT = 'http://tyari.info:9999/v1'
-
 class Project extends Component {
   static async getInitialProps({ query }) {
-    const res = await axios.get(`${ENDPOINT}/projects/${query.id}`)
-    const resIssues = await axios.get(`${ENDPOINT}/projects/${query.id}/issues`)
+    const res = await client.get(`/projects/${query.id}`)
+    const resIssues = await client.get(`/projects/${query.id}/issues`)
     return { project: res.data, issues: resIssues.data }
   }
 

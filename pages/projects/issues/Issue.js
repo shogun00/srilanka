@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { Card } from 'semantic-ui-react'
 import Layout from '../../../components/Layout'
 import CommentList from './CommentList'
 
-import { BACKEND_URL } from '../../../constants'
+import client from '../../../utils/client'
 
 const Issue = ({ issue, comments }) => (
   <Layout>
@@ -22,11 +21,9 @@ const Issue = ({ issue, comments }) => (
 
 Issue.getInitialProps = async function(context) {
   const { project_id, id } = context.query
-  const resIssue = await axios.get(
-    `${BACKEND_URL}/projects/${project_id}/issues/${id}`
-  )
-  const resComments = await axios.get(
-    `${BACKEND_URL}/projects/${project_id}/issues/${id}/comments`
+  const resIssue = await client.get(`/projects/${project_id}/issues/${id}`)
+  const resComments = await client.get(
+    `/projects/${project_id}/issues/${id}/comments`
   )
   return { issue: resIssue.data, comments: resComments.data }
 }

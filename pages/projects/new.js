@@ -1,17 +1,16 @@
 import React, { useState, Component } from 'react'
 import { withRouter } from 'next/router'
 import { List, Button } from 'semantic-ui-react'
-import axios from 'axios';
+import client from '../../utils/client'
 
 import Layout from '../../components/Layout'
 
-const ENDPOINT = 'http://tyari.info:9999/v1'
-
-const NewProject = ({ router }) =>  {
+const NewProject = ({ router }) => {
   const titleTag = () => {
     return (
       <div className="flex" key="titleTag">
-        <p>title</p><input type="text" name="title" />
+        <p>title</p>
+        <input type="text" name="title" />
       </div>
     )
   }
@@ -26,20 +25,22 @@ const NewProject = ({ router }) =>  {
   }
 
   const onSubmit = () => {
-    axios.post(`${ENDPOINT}/projects/`, {project: {title: 'test'}}).then( (res) => {
+    client.post('/projects/', { project: { title: 'test' } }).then(res => {
       router.push('/projects')
     })
   }
 
   const submitTag = () => {
     return (
-      <Button primary onClick={onSubmit}>登録</Button>
+      <Button primary onClick={onSubmit}>
+        登録
+      </Button>
     )
   }
 
   const returnTag = () => {
     return (
-      <Button href='/projects'>
+      <Button href="/projects">
         <p>戻る</p>
       </Button>
     )
