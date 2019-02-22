@@ -3,7 +3,6 @@ import { withRouter, router } from 'next/router'
 import { List, Button } from 'semantic-ui-react'
 import client from '../../utils/client'
 
-import Layout from '../../components/Layout'
 import IssuesList from './IssuesList'
 
 class Project extends Component {
@@ -71,11 +70,11 @@ class Project extends Component {
   render = () => {
     const { project, issues } = this.props
     return (
-      <Layout>
+      <>
         {this.projectInfo()}
         <IssuesList project={project} issues={issues} />
         {this.buttonArea()}
-      </Layout>
+      </>
     )
   }
 }

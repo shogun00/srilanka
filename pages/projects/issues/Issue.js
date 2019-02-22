@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Card } from 'semantic-ui-react'
-import Layout from '../../../components/Layout'
 import CommentList from './CommentList'
 
 import client from '../../../utils/client'
 
 const Issue = ({ issue, comments }) => (
-  <Layout>
+  <>
     <Card fluid>
       <Card.Content>
         <Card.Header>
@@ -16,7 +15,7 @@ const Issue = ({ issue, comments }) => (
       <Card.Content>{issue.description}</Card.Content>
     </Card>
     <CommentList comments={comments} />
-  </Layout>
+  </>
 )
 
 Issue.getInitialProps = async function(context) {

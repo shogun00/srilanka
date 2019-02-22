@@ -3,8 +3,6 @@ import { withRouter } from 'next/router'
 import { List, Button } from 'semantic-ui-react'
 import client from '../../utils/client'
 
-import Layout from '../../components/Layout'
-
 const NewProject = ({ router }) => {
   const titleTag = () => {
     return (
@@ -49,12 +47,7 @@ const NewProject = ({ router }) => {
     return [titleTag(), buttonArea()]
   }
 
-  return (
-    <Layout>
-      <p>Create Project Page</p>
-      <List items={items()} />
-    </Layout>
-  )
+  return <List items={items()} />
 }
 
 export default withRouter(NewProject)
