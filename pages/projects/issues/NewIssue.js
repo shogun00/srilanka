@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Router from 'next/router'
 import client from '../../../utils/client'
 import { Form, Input, TextArea, Card, Button } from 'semantic-ui-react'
+
+import { AuthContext } from '../../../components/AuthComponent'
 
 const handleSubmit = (projectId, title, description) => {
   const requestBody = {
@@ -11,7 +13,6 @@ const handleSubmit = (projectId, title, description) => {
       created_user_id: 1,
     },
   }
-  // alert(title)
   const res = client.post(`/projects/${projectId}/issues`, requestBody)
   console.log(res)
   Router.push(`/projects/${projectId}`)
@@ -20,6 +21,7 @@ const handleSubmit = (projectId, title, description) => {
 const NewIssue = ({ projectId }) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const user = useContext(AuthContext)
 
   return (
     <Card fluid>
