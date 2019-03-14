@@ -22,7 +22,10 @@ const CommentDetail = ({ comment }) => {
 
   return (
     <Comment>
-      <Comment.Avatar as="a" src="" />
+      <Comment.Avatar
+        as="a"
+        src="https://pbs.twimg.com/profile_images/3406268893/54b7e1f981b7df7c817af48d1b96ad5e_400x400.jpeg"
+      />
       <Comment.Content>
         <Comment.Author as="a">{comment.user_id}</Comment.Author>
         <Comment.Metadata>{comment.created_at}</Comment.Metadata>
