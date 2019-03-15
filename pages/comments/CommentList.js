@@ -13,7 +13,11 @@ const CommentList = ({ router: { query } }) => {
     const result = await client.get(
       `/projects/${project_id}/issues/${id}/comments`
     )
-    setComments(result.data)
+    const comments = result.data
+    const sortedComments = [...comments].sort((a, b) => {
+      return a.created_at > b.created_at ? 1 : -1
+    })
+    setComments(sortedComments)
   }
 
   useEffect(() => {
@@ -24,14 +28,14 @@ const CommentList = ({ router: { query } }) => {
     <Comment.Group>
       <Header>Comments</Header>
       {comments.map((comment, i) => (
-        <CommentDetail key={i} comment={comment} />
+        <CommentDetail key={i} comment={comment} reloadComments={setComments} />
       ))}
-      <NewComment fetchComments={setComments} />
+      <NewComment reloadComments={setComments} />
     </Comment.Group>
   )
 }
 
-const CommentDetail = ({ comment }) => {
+const CommentDetail = ({ comment, reloadComments }) => {
   const [replyForm, setReplyForm] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const onClickForOpen = useCallback(() => setReplyForm(true), [])
@@ -49,7 +53,11 @@ const CommentDetail = ({ comment }) => {
         <Comment.Author as="a">{comment.user_id}</Comment.Author>
         <Comment.Metadata>{comment.created_at}</Comment.Metadata>
         {editMode ? (
-          <EditForm content={comment.content} onClick={onClickForUneditable} />
+          <EditForm
+            comment={comment}
+            onClick={onClickForUneditable}
+            reloadComments={reloadComments}
+          />
         ) : (
           <>
             <Comment.Text>{comment.content}</Comment.Text>

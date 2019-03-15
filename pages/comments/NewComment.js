@@ -3,33 +3,30 @@ import { withRouter } from 'next/router'
 import { Form, Button } from 'semantic-ui-react'
 import client from '../../utils/client'
 
-const handleSubmit = async (endpoint, content) => {
-  const requestBody = { comment: { content } }
-  await client
-    .post(endpoint, requestBody)
-    .then(res => {
-      console.log('success')
-      return res
-    })
-    .catch(() => {
-      console.log('Error')
-    })
+const handleSubmit = async (endpoint, content, reloadComments) => {
+  await postNewComment(endpoint, content)
+  const comments = await refetchComments(endpoint)
+  reloadComments(comments)
+}
+
+const postNewComment = async (endpoint, content) => {
+  const postBody = { comment: { content, user_id: 1 } }
+  const res = await client.post(endpoint, postBody)
+  return res.data
 }
 
 const refetchComments = async endpoint => {
-  await client
-    .get(endpoint)
-    .then(res => {
-      console.log('!!!!!!!!!!!!!!!')
-      console.log(res)
-      return res.data
-    })
-    .catch(error => console.log(error))
+  const res = await client.get(endpoint)
+  const resComments = res.data
+  const sortedComments = [...resComments].sort((a, b) => {
+    return a.created_at > b.created_at ? 1 : -1
+  })
+  return sortedComments
 }
 
-const NewComment = ({ fetchComments, router }) => {
+const NewComment = ({ reloadComments, router: { query } }) => {
   const [content, setContent] = useState('')
-  const { project_id, id } = router.query
+  const { project_id, id } = query
   const requestEndpoint = `/projects/${project_id}/issues/${id}/comments`
   const isDisabled = content.length == 0
 
@@ -38,19 +35,9 @@ const NewComment = ({ fetchComments, router }) => {
       reply
       onSubmit={() => {
         console.log('new comment submit')
-        handleSubmit(requestEndpoint, content).then(() => {
-          // refetchComments(requestEndpoint, fetchComments)
-          client
-            .get(requestEndpoint)
-            .then(res => {
-              setContent('')
-              console.log('*********************')
-              console.log(res.data)
-              fetchComments(res.data)
-            })
-            .catch(error => console.log(error))
-          // router.push(`/projects/${project_id}/issues/${id}`)
-        })
+        handleSubmit(requestEndpoint, content, reloadComments).then(() =>
+          setContent('')
+        )
       }}
     >
       <Form.TextArea
