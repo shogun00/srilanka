@@ -11,6 +11,12 @@ app
   .then(() => {
     const server = express()
 
+    server.get('/projects/new', (req, res) => {
+      const actualPage = '/projects/NewProject'
+      const queryParams = {}
+      app.render(req, res, actualPage, queryParams)
+    })
+
     server.get('/projects/:id', (req, res) => {
       const actualPage = '/projects/project'
       const queryParams = { id: req.params.id }
