@@ -2,9 +2,9 @@ import { useState, useContext } from 'react'
 import Router from 'next/router'
 import { Form, Input, TextArea, Card, Button } from 'semantic-ui-react'
 
-import { AuthContext } from '../../../components/AuthComponent'
-import { BackButton } from '../../../components/buttons'
-import client from '../../../utils/client'
+import { AuthContext } from '../../components/AuthComponent'
+import { BackButton } from '../../components/buttons'
+import client from '../../utils/client'
 
 const handleSubmit = (projectId, title, description) => {
   const requestBody = {

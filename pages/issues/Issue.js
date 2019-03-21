@@ -1,7 +1,7 @@
 import { Card } from 'semantic-ui-react'
-import CommentList from '../../comments/CommentList'
-import { BackButton } from '../../../components/buttons'
-import client from '../../../utils/client'
+import CommentList from '../comments/CommentList'
+import { BackButton } from '../../components/buttons'
+import client from '../../utils/client'
 
 const Issue = ({ issue }) => (
   <>

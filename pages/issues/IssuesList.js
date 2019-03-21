@@ -30,7 +30,7 @@ const IssuesList = ({ project, issues }) => {
             <CardHeadTitle>Issues</CardHeadTitle>
             <Link
               href={{
-                pathname: '/projects/issues/NewIssue',
+                pathname: '/issues/NewIssue',
                 query: { id: project.id },
               }}
               as={`/projects/${project.id}/issues/new`}
@@ -59,7 +59,7 @@ const IssueItem = ({ issue }) => (
     <List.Content>
       <Link
         href={{
-          pathname: '/projects/issues/Issue',
+          pathname: '/issues/Issue',
           query: { project_id: issue.project_id, id: issue.id },
         }}
         as={`/projects/${issue.project_id}/issues/${issue.id}`}

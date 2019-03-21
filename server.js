@@ -18,13 +18,13 @@ app
     })
 
     server.get('/projects/:id/issues/new', (req, res) => {
-      const actualPage = '/projects/issues/NewIssue'
+      const actualPage = '/issues/NewIssue'
       const queryParams = { id: req.params.id }
       app.render(req, res, actualPage, queryParams)
     })
 
     server.get('/projects/:project_id/issues/:id', (req, res) => {
-      const actualPage = '/projects/issues/Issue'
+      const actualPage = '/issues/Issue'
       const queryParams = {
         project_id: req.params.project_id,
         id: req.params.id,

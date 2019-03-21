@@ -3,7 +3,7 @@ import { withRouter, router } from 'next/router'
 import { List, Button } from 'semantic-ui-react'
 import client from '../../utils/client'
 
-import IssuesList from './IssuesList'
+import IssuesList from '../issues/IssuesList'
 
 class Project extends Component {
   static async getInitialProps({ query }) {

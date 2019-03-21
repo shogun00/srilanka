@@ -1,20 +1,17 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@now/next"
-    }
-  ],
+  "builds": [{
+    "src": "package.json",
+    "use": "@now/next"
+  }],
   "alias": "srilanka-demo",
-  "routes": [
-    {
+  "routes": [{
       "src": "/projects/(?<id>[^/]+)/issues/new",
-      "dest": "/projects/issues/NewIssue?id=$id"
+      "dest": "/issues/NewIssue?id=$id"
     },
     {
       "src": "/projects/(?<project_id>[^/]+)/issues/(?<id>[^/]+)$",
-      "dest": "/projects/issues/Issue?project_id=$project_id&id=$id"
+      "dest": "/issues/Issue?project_id=$project_id&id=$id"
     },
     {
       "src": "/projects/(?<id>[^/]+)$",
