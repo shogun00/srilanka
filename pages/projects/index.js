@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Link from 'next/link'
 import { Card, Icon, List, Button } from 'semantic-ui-react'
+import { withAuth } from '../../components/withAuth'
 import client from '../../utils/client'
 
 const ProjectsList = ({ projects }) => (
@@ -67,4 +68,4 @@ const CardHeadTitle = styled.h1`
   margin-bottom: 0;
 `
 
-export default ProjectsList
+export default withAuth(ProjectsList)

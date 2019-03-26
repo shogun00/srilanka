@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Router from 'next/router'
 import { Form, Input, Card, Button } from 'semantic-ui-react'
+import { withAuth } from '../../components/withAuth'
 import client from '../../utils/client'
 import { BackButton } from '../../components/buttons'
 
@@ -45,4 +46,4 @@ const NewProject = () => {
   )
 }
 
-export default NewProject
+export default withAuth(NewProject)

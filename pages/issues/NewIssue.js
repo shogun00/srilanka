@@ -1,8 +1,7 @@
 import { useState, useContext } from 'react'
 import Router from 'next/router'
 import { Form, Input, TextArea, Card, Button } from 'semantic-ui-react'
-
-import { AuthContext } from '../../components/AuthComponent'
+import { withAuth } from '../../components/withAuth'
 import { BackButton } from '../../components/buttons'
 import client from '../../utils/client'
 
@@ -22,7 +21,6 @@ const handleSubmit = (projectId, title, description) => {
 const NewIssue = ({ projectId }) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const user = useContext(AuthContext)
 
   return (
     <>
@@ -63,4 +61,4 @@ NewIssue.getInitialProps = function(context) {
   return { projectId: id }
 }
 
-export default NewIssue
+export default withAuth(NewIssue)

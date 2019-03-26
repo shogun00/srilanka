@@ -1,6 +1,7 @@
 import { Card } from 'semantic-ui-react'
 import CommentList from '../comments/CommentList'
 import { BackButton } from '../../components/buttons'
+import { withAuth } from '../../components/withAuth'
 import client from '../../utils/client'
 
 const Issue = ({ issue }) => (
@@ -24,4 +25,4 @@ Issue.getInitialProps = async function({ query }) {
   return { issue: resIssue.data }
 }
 
-export default Issue
+export default withAuth(Issue)
