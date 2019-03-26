@@ -1,44 +1,74 @@
 import React, { Component, useContext } from 'react'
-import { Router } from 'next/router'
+import Router from 'next/router'
 import { AuthContext } from './AuthComponent'
+import nextCookie from 'next-cookies'
+import cookie from 'js-cookie'
+import Layout from './Layout'
 
+const tokenKey = 'token'
 const signinPath = '/sign_in'
 
-const signOut = () => {
-  // TODO: Remove token from localStorage
+const demoUser = { id: 1, name: 'User1', role: 'admin' }
+
+export const signin = async ({ token }) => {
+  cookie.set(tokenKey, token, { expires: 1 })
+  Router.push('/')
+}
+
+export const signout = () => {
+  cookie.remove(tokenKey)
+  window.localStorage.setItem('signout', Date.now())
   Router.push(signinPath)
 }
 
 const getDisplayName = Component =>
   Component.displayName || Component.name || 'Component'
 
-const withAuth = WrappedComponent =>
+export const withAuth = WrappedComponent =>
   class extends Component {
     static displayName = `withAuth(${getDisplayName(WrappedComponent)})`
     static async getInitialProps(ctx) {
       const token = auth(ctx)
+      const user = token ? demoUser : null
 
       const componentProps =
         WrappedComponent.getInitialProps &&
         (await WrappedComponent.getInitialProps(ctx))
-      return { ...componentProps, token }
+      return { ...componentProps, token, user }
     }
-    // const { isSignedIn, isFetched, user } = auth
+
+    componentDidMount() {
+      window.addEventListener('storage', this.syncSignout)
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener('storage', this.syncSignout)
+      window.localStorage.removeItem('signout')
+    }
+
+    syncSignout = event => {
+      if (event.key === 'signout') {
+        console.log('signout from storage')
+        Router.push(signinPath)
+      }
+    }
 
     render() {
       console.log(this.props)
       // const auth = useContext(AuthContext)
       return (
-        <AuthContext.Consumer>
-          {user => <WrappedComponent user={user} {...this.props} />}
-        </AuthContext.Consumer>
+        // <AuthContext.Consumer>
+        //   {user => <WrappedComponent user={user} {...this.props} />}
+        // </AuthContext.Consumer>
+        <Layout user={this.props.user}>
+          <WrappedComponent {...this.props} />
+        </Layout>
       )
     }
   }
 
 export const auth = ctx => {
-  // const token = localStorage.getItem('auth_token')
-  const token = null
+  const { token } = nextCookie(ctx)
 
   if (ctx.req && !token) {
     ctx.res.writeHead(302, { Location: signinPath })
@@ -49,5 +79,6 @@ export const auth = ctx => {
   if (!token) {
     Router.push(signinPath)
   }
+
+  return token
 }
-export default withAuth

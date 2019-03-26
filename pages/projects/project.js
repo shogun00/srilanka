@@ -1,4 +1,5 @@
 import { Header } from 'semantic-ui-react'
+import { withAuth } from '../../components/withAuth'
 import client from '../../utils/client'
 import { BackButton } from '../../components/buttons'
 import IssuesList from '../issues/IssuesList'
@@ -18,4 +19,4 @@ Project.getInitialProps = async ({ query }) => {
   return { project: res.data, issues: resIssues.data }
 }
 
-export default Project
+export default withAuth(Project)

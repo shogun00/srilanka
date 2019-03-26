@@ -1,13 +1,12 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, Icon } from 'semantic-ui-react'
 
-import withAuth from './withAuth'
-import { AuthContext } from './AuthComponent'
+import { signout } from './withAuth'
 
-const Header = () => {
+const Header = ({ user }) => {
   const [activeItem, setActiveItem] = useState('home')
-  const user = useContext(AuthContext)
+  console.log(user)
 
   return (
     <div>
@@ -32,10 +31,13 @@ const Header = () => {
                 Projects
               </Menu.Item>
             </Link>
-            <Menu.Item position="right">
-              <Icon size="large" name="user circle" />
-              {user.name}
-            </Menu.Item>
+            <Menu.Menu position="right">
+              <Menu.Item>
+                <Icon size="large" name="user circle" />
+                {user.name}
+              </Menu.Item>
+              <Menu.Item name="sign out" onClick={signout} />
+            </Menu.Menu>
           </>
         ) : (
           <Menu.Item position="right">Sign in</Menu.Item>
