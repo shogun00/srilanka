@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, Icon } from 'semantic-ui-react'
+import { Menu, Icon, Dropdown } from 'semantic-ui-react'
 
 import { signout } from './withAuth'
 
@@ -33,10 +33,27 @@ const Header = ({ user }) => {
             </Link>
             <Menu.Menu position="right">
               <Menu.Item>
-                <Icon size="large" name="user circle" />
-                {user.name}
+                <Dropdown
+                  trigger={
+                    <>
+                      <Icon size="large" name="user circle" />
+                      {user.name}
+                    </>
+                  }
+                  icon={null}
+                >
+                  <Dropdown.Menu>
+                    <Link href="/profile" passHref>
+                      <Dropdown.Item text="Profile" icon="user" />
+                    </Link>
+                    <Dropdown.Item
+                      text="Sign out"
+                      icon="sign out"
+                      onClick={signout}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
               </Menu.Item>
-              <Menu.Item name="sign out" onClick={signout} />
             </Menu.Menu>
           </>
         ) : (
